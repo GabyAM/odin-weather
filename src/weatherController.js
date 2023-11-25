@@ -8,6 +8,12 @@ export const weatherController = (function () {
 		console.log(currentWeather);
 	}
 
+	function getDayWeather(index) {
+		if (currentWeather) {
+				return currentWeather.forecast[index];
+		}
+	}
+
 	async function getCurrentWeather() {
 		return currentWeather ? currentWeather.current : null;
 	}
