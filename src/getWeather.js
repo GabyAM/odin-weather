@@ -35,3 +35,8 @@ function getMappedWeather(weatherJson) {
 	});
 	return mappedWeather;
 }
+
+export async function getWeather(city) {
+	const weatherJson = await fetchWeather(city);
+	return { ...getMappedWeather(weatherJson) };
+}
