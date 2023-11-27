@@ -19,6 +19,12 @@ export const domController = (function () {
 		function isWordInObject(word) {
 			return Object.keys(icons).some((key) => word.includes(key));
 		}
+
+		function applyColor(value) {
+			const name = Object.keys(icons).find((key) => icons[key] === value);
+
+			button.classList.add(name.replace(/ /g, "-"));
+		}
 		let icon;
 		if (isWordInObject(condition.name.toLowerCase())) {
 			icon = document.createElement("span");
@@ -40,6 +46,9 @@ export const domController = (function () {
 			icon = document.createElement("img");
 			icon.src = condition.icon;
 		}
+
+		if (icon.textContent) applyColor(icon.textContent);
+
 		button.appendChild(icon);
 	}
 
