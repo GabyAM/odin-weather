@@ -1,11 +1,17 @@
 import { fetchWeather } from "./fetchWeather.js";
 
 function getMappedWeather(weatherJson) {
+	function mapCondition(condition) {
+		return {
+			name: condition.text,
+			icon: condition.icon,
+		};
+	}
 	function mapWeatherMoment(weather) {
 		return {
 			tempC: weather.temp_c,
 			tempF: weather.temp_f,
-			condition: weather.condition.text,
+			condition: mapCondition(weather.condition),
 			windKph: weather.wind_kph,
 			humidity: weather.humidity,
 		};
@@ -16,8 +22,8 @@ function getMappedWeather(weatherJson) {
 			name: weatherJson.location.name,
 			country: weatherJson.location.country,
 		},
-		current: {
-			lastUpdated: weatherJson.current.last_updated,
+		now: {
+			lastUpdated: weatherJson.current.last_updated.slice(11),
 			...mapWeatherMoment(weatherJson.current),
 		},
 		forecast: {},
@@ -31,7 +37,7 @@ function getMappedWeather(weatherJson) {
 			};
 		});
 
-		return { hours, condition: day.day.condition.text };
+		return { hours, condition: mapCondition(day.day.condition) };
 	});
 	return mappedWeather;
 }
