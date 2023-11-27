@@ -2,36 +2,51 @@ import { getWeather } from "./getWeather.js";
 import { approximateHour } from "./utilities.js";
 
 export const weatherController = (function () {
-	let currentWeather;
-	const selectedHour = null;
-	changeCity("buenos aires");
+	const current = {
+		weather: null,
+		day: null,
+		hour: null,
+	};
 	async function getWeatherForecast(city) {
-		currentWeather = await getWeather(city);
-		console.log(currentWeather);
+		current.weather = await getWeather(city);
+		console.log(current.weather);
 	}
 
-	function getDayWeather(index) {
-		if (currentWeather) {
-			if (selectedHour) {
-				return currentWeather.forecast[index].selectedHour;
+	// when changing day or hour
+	function getDayWeather(dayIndex) {
+		if (current.weather) {
+			if (current.hour) {
+				return current.weather.forecast[dayIndex][current.hour];
 			}
-			if (index !== 0) {
-				const hour = approximateHour(
-					currentWeather.current.lastUpdated
-				);
-				return currentWeather.forecast[index];
 			}
-			return currentWeather.current;
+			return current.weather.now;
 		}
 	}
 
+	function getDayCondition(dayIndex) {
+		if (current.weather) {
+			return current.weather.forecast[dayIndex].condition;
+		}
+		return null;
+	}
+
 	async function getCurrentWeather() {
-		return currentWeather ? currentWeather.current : null;
+		return current.weather ? current.weather.now : null;
 	}
 
 	async function changeCity(cityName) {
 		await getWeatherForecast(cityName);
 	}
 
-	return { changeCity, getDayWeather, getCurrentWeather };
+	/* async function changeHour(newHour) {
+		await getDayWeather(newHour);
+	} */
+
+	return {
+		init,
+		changeCity,
+		getDayWeather,
+		getCurrentWeather,
+		getDayCondition,
+	};
 })();
