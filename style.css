@@ -1,0 +1,50 @@
+:root {
+	--main-white: #fbfefb;
+	--main-grey: #f3f6f3;
+	--dark-grey: #d9d9d9;
+	--card-main: #bef4ed;
+	--card-sunny: #f4efbe;
+	--card-rainy: #becdf4;
+	--text-color: #0c2b08;
+}
+
+body {
+	padding: 20px;
+	width: 800px;
+	margin: auto;
+}
+
+.day-buttons-container {
+	height: 120px;
+	background-color: var(--main-grey);
+	display: flex;
+	padding: 20px 40px;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 32px;
+}
+
+.day-button {
+	width: 200px;
+	height: 120px;
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: var(--text-color);
+	background-color: var(--card-main);
+	border: none;
+}
+
+.material-symbols-outlined {
+	color: var(--text-color);
+}
+
+.sunny {
+	background: linear-gradient(to bottom, var(--card-main), var(--card-sunny));
+}
+
+.rain {
+	background: linear-gradient(to bottom, var(--card-main), var(--card-rainy));
+}
