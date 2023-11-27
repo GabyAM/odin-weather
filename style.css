@@ -10,31 +10,55 @@
 
 body {
 	padding: 20px;
-	width: 800px;
-	margin: auto;
+	width: 90%;
+	max-width: 800px;
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
 }
 
 .day-buttons-container {
 	height: 120px;
 	background-color: var(--main-grey);
-	display: flex;
+	width: 100%;
+	/*display: flex;
 	padding: 20px 40px;
 	justify-content: space-between;
-	align-items: center;
+	align-items: center;*/
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	padding: 1em 2em;
+	gap: 8%;
 	border-radius: 32px;
 }
 
 .day-button {
-	width: 200px;
-	height: 120px;
 	border-radius: 8px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	gap: 5px;
 	color: var(--text-color);
 	background-color: var(--card-main);
 	border: none;
+}
+
+.day-button h3 {
+	width: 80%;
+	overflow-wrap: break-word;
+	font-size: min(18px, 3vw);
+	margin: 0;
+}
+
+.day-button span {
+	font-size: min(36px, 6vw);
+}
+
+.day-button img {
+	/*for default icons*/
+	width: min(36px, 6vw);
+	height: auto;
 }
 
 .material-symbols-outlined {
