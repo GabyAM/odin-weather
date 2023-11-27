@@ -1,5 +1,5 @@
 import { getWeather } from "./getWeather.js";
-import { approximateHour } from "./utilities.js";
+import { getHourIndex } from "./utilities.js";
 
 export const weatherController = (function () {
 	const current = {
@@ -18,6 +18,9 @@ export const weatherController = (function () {
 			if (current.hour) {
 				return current.weather.forecast[dayIndex][current.hour];
 			}
+			if (dayIndex !== 0) {
+				const hourIndex = getHourIndex(current.weather.now.lastUpdated);
+				return current.weather.forecast[dayIndex].hours[hourIndex];
 			}
 			return current.weather.now;
 		}
