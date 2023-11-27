@@ -7,6 +7,11 @@ export const weatherController = (function () {
 		day: null,
 		hour: null,
 	};
+
+	async function init() {
+		await changeCity("buenos aires");
+	}
+	// only call when changing city
 	async function getWeatherForecast(city) {
 		current.weather = await getWeather(city);
 		console.log(current.weather);
