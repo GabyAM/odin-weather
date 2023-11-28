@@ -64,6 +64,9 @@ export const domController = (function () {
 		const conditionText = document.createElement("h3");
 		conditionText.textContent = weather.condition.name;
 		weatherElement.appendChild(conditionText);
+		const $cardThumbnail = document.querySelector(".card-thumbnail");
+		$cardThumbnail.innerHTML = "";
+		styleWeatherCard($cardThumbnail, weather.condition);
 	}
 
 	function loadButtons() {
@@ -141,6 +144,7 @@ export const domController = (function () {
 			});
 		}
 	});
+
 	function init() {
 		loadButtons();
 		loadHours();
