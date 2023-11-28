@@ -72,3 +72,29 @@ body {
 .rain {
 	background: linear-gradient(to bottom, var(--card-main), var(--card-rainy));
 }
+
+.hour-selection {
+	background-color: var(--main-grey);
+	border-radius: 16px;
+	height: 20px;
+	width: 100%;
+	display: flex;
+	gap: 50px;
+	overflow-x: scroll;
+	white-space: nowrap;
+	scroll-behavior: smooth;
+	padding: 0 20px;
+}
+.hour-selection::-webkit-scrollbar {
+	display: none;
+}
+
+.hour {
+	border: none;
+	background: none;
+}
+
+.selected {
+	background-color: var(--dark-grey);
+	border-radius: 16px;
+}

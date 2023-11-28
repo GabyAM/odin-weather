@@ -127,6 +127,20 @@ export const domController = (function () {
 		});
 	}
 
+	$hoursDiv.addEventListener("wheel", (e) => {
+		e.preventDefault();
+		if (e.deltaY > 0) {
+			$hoursDiv.scrollTo({
+				left: ($hoursDiv.scrollLeft += 100),
+				behavior: "smooth",
+			});
+		} else {
+			$hoursDiv.scrollTo({
+				left: ($hoursDiv.scrollLeft -= 100),
+				behavior: "smooth",
+			});
+		}
+	});
 	function init() {
 		loadButtons();
 		loadHours();
