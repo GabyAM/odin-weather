@@ -77,6 +77,11 @@ export const domController = (function () {
 				showWeather(weather);
 			});
 
+			const title = document.createElement("h3");
+			const text = await weatherController.getDayTitle(index);
+			title.textContent = text;
+			button.appendChild(title);
+
 			const condition = await weatherController.getDayCondition(index);
 			condition.isDay = true;
 			styleWeatherCard(button, condition);

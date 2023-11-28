@@ -9,4 +9,6 @@ export function approximateHour(date) {
 	return format(hourStart, "hh:mm");
 }
 
+export function getTitleFromDate(date) {
+	return format(parseISO(date), "EEEE d");
 }

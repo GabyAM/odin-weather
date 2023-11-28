@@ -63,6 +63,9 @@ export const weatherController = (function () {
 		return current.weather.forecast[index].condition;
 	}
 
+	function getDayTitle(index) {
+		return getTitleFromDate(current.weather.forecast[index].date);
+	}
 
 	return {
 		init,
@@ -74,6 +77,7 @@ export const weatherController = (function () {
 		getCurrentWeather,
 		getMomentWeather,
 		getDayCondition,
+		getDayTitle,
 		getCurrentDayIndex,
 	};
 })();
