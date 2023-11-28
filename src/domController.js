@@ -68,4 +68,9 @@ export const domController = (function () {
 	}
 
 	return { loadButtons };
+	function init() {
+		loadButtons();
+	}
+
+	return { init };
 })();
