@@ -68,12 +68,25 @@ export const domController = (function () {
 
 			const condition = await weatherController.getDayCondition(index);
 			styleDayButton(button, condition);
+	function loadHours() {
+		function createHourElement(name) {
+			const element = document.createElement("button");
+			element.className = "hour";
+			element.textContent = name;
+			$hoursDiv.appendChild(element);
+		}
+
+		$hoursDiv.innerHTML = "";
+		const hours = weatherController.getDayWeather().hours;
+		hours.forEach((hour) => {
+			createHourElement(hour.time);
 		});
 	}
 
 	return { loadButtons };
 	function init() {
 		loadButtons();
+		loadHours();
 	}
 
 	return { init };
