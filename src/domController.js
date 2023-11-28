@@ -16,22 +16,25 @@ export const domController = (function () {
 		thunder: "thunderstorm",
 	};
 
-	function styleDayButton(button, condition) {
+	function styleWeatherCard(element, condition) {
 		function isWordInObject(word) {
 			return Object.keys(icons).some((key) => word.includes(key));
 		}
 
-		function applyColor(value) {
+		function applyColor(value, isDay) {
+			if (value.includes("partly_cloudy")) value = value.slice(0, 13);
 			const name = Object.keys(icons).find((key) => icons[key] === value);
-
-			button.classList.add(name.replace(/ /g, "-"));
+			const firstColor = `var(--card-main${!isDay ? "-night" : ""})`;
+			const secondColor = `var(--card-${
+				name === "clear" ? "main" : name
+			})`;
+			element.style.background = `linear-gradient(to bottom, ${firstColor}, ${secondColor})`;
 		}
 		let icon;
-		if (isWordInObject(condition.name.toLowerCase())) {
+		const conditionName = condition.name.toLowerCase().replace(/ /g, "-");
+		if (isWordInObject(conditionName)) {
 			icon = document.createElement("span");
 			icon.className = "material-symbols-outlined";
-			const conditionName = condition.name.toLowerCase();
-
 			if (conditionName.includes("rain")) {
 				icon.textContent = icons.rain;
 			} else if (conditionName.includes("sleet")) {
@@ -42,16 +45,20 @@ export const domController = (function () {
 				icon.textContent = icons.thunder;
 			} else {
 				icon.textContent = icons[conditionName];
+				if (conditionName === "partly-cloudy") {
+					icon.textContent += condition.isDay ? "_day" : "_night";
+				}
 			}
 		} else {
 			icon = document.createElement("img");
 			icon.src = condition.icon;
 		}
+		console.log(icon.textContent);
+		if (icon.textContent) applyColor(icon.textContent, condition.isDay);
 
-		if (icon.textContent) applyColor(icon.textContent);
-
-		button.appendChild(icon);
+		element.appendChild(icon);
 	}
+
 	function showWeather(weather) {
 		const weatherElement = document.querySelector(".weather");
 		const conditionText = document.createElement("h3");
@@ -68,7 +75,11 @@ export const domController = (function () {
 			});
 
 			const condition = await weatherController.getDayCondition(index);
-			styleDayButton(button, condition);
+			condition.isDay = true;
+			styleWeatherCard(button, condition);
+		});
+	}
+
 	function addHourEvents(element) {
 		function highlightElement(element) {
 			const hours = document.querySelectorAll(".hour");
