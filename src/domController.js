@@ -8,7 +8,7 @@ export const domController = (function () {
 		rain: "rainy",
 		clear: "clear_night",
 		cloudy: "filter_drama",
-		"partly cloudy": "partly_cloudy_day",
+		"partly-cloudy": "partly_cloudy",
 		fog: "foggy",
 		mist: "mist",
 		sleet: "weather_hail",

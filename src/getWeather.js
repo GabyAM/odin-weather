@@ -1,18 +1,23 @@
 import { fetchWeather } from "./fetchWeather.js";
 
 function getMappedWeather(weatherJson) {
-	function mapCondition(condition) {
-		return {
+	function mapCondition(condition, isDay = null) {
+		const newCondition = {
 			name: condition.text,
 			icon: condition.icon,
 		};
+		if (isDay !== null) {
+			newCondition.isDay = isDay === 1;
+		}
+		return newCondition;
 	}
 
-	function mapWeatherMoment(weather) {
+	function mapWeatherMoment(weather, useIsDay = null) {
+		const isDay = useIsDay !== null ? weather.is_day : null;
 		return {
 			tempC: weather.temp_c,
 			tempF: weather.temp_f,
-			condition: mapCondition(weather.condition),
+			condition: mapCondition(weather.condition, isDay),
 			windKph: weather.wind_kph,
 			humidity: weather.humidity,
 		};
@@ -25,7 +30,7 @@ function getMappedWeather(weatherJson) {
 		},
 		now: {
 			lastUpdated: weatherJson.current.last_updated,
-			...mapWeatherMoment(weatherJson.current),
+			...mapWeatherMoment(weatherJson.current, "useIsDay"),
 		},
 		forecast: {},
 	};
@@ -34,9 +39,8 @@ function getMappedWeather(weatherJson) {
 			const mappedHour = {
 				time: hour.time.slice(11),
 				chanceOfRain: hour.chance_of_rain,
-				...mapWeatherMoment(hour),
+				...mapWeatherMoment(hour, "useIsDay"),
 			};
-			mappedHour.condition.isDay = hour.is_Day === 1;
 			return mappedHour;
 		});
 
