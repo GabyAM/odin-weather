@@ -1,3 +1,4 @@
+import { weatherInterface } from "./interface.js";
 import { weatherController } from "./weatherController.js";
 
 export const domController = (function () {
@@ -68,22 +69,53 @@ export const domController = (function () {
 
 			const condition = await weatherController.getDayCondition(index);
 			styleDayButton(button, condition);
+	function addHourEvents(element) {
+		function highlightElement(element) {
+			const hours = document.querySelectorAll(".hour");
+			hours.forEach((hour) => {
+				if (hour.classList.contains("selected")) {
+					hour.classList.remove("selected");
+				}
+			});
+			element.classList.add("selected");
+		}
+		function handleHourChange() {
+			highlightElement(element);
+			const weather =
+				element.textContent === "Now"
+					? weatherController.getCurrentWeather()
+					: weatherInterface.getHourWeather(element.textContent);
+			showWeather(weather);
+		}
+
+		element.removeEventListener("click", handleHourChange);
+
+		if (!element.hasAttribute("data-event-bound")) {
+			element.addEventListener("click", handleHourChange);
+			element.setAttribute("data-event-bound", true);
+		}
+	}
+
+	const $hoursDiv = document.querySelector(".hour-selection");
 	function loadHours() {
 		function createHourElement(name) {
 			const element = document.createElement("button");
 			element.className = "hour";
 			element.textContent = name;
+			addHourEvents(element);
 			$hoursDiv.appendChild(element);
 		}
 
 		$hoursDiv.innerHTML = "";
+		if (weatherInterface.isToday()) {
+			createHourElement("Now");
+		}
 		const hours = weatherController.getDayWeather().hours;
 		hours.forEach((hour) => {
 			createHourElement(hour.time);
 		});
 	}
 
-	return { loadButtons };
 	function init() {
 		loadButtons();
 		loadHours();
