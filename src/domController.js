@@ -51,15 +51,19 @@ export const domController = (function () {
 
 		button.appendChild(icon);
 	}
+	function showWeather(weather) {
+		const weatherElement = document.querySelector(".weather");
+		const conditionText = document.createElement("h3");
+		conditionText.textContent = weather.condition.name;
+		weatherElement.appendChild(conditionText);
+	}
 
 	function loadButtons() {
 		const $dayButtons = document.querySelectorAll(".day-button");
 		$dayButtons.forEach(async (button, index) => {
 			button.addEventListener("click", () => {
-				const dayWeather = weatherController.getDayWeather(index);
-				const text = document.createElement("div");
-				text.textContent = JSON.stringify(dayWeather);
-				document.querySelector("body").appendChild(text);
+				const weather = weatherController.getMomentWeather(index);
+				showWeather(weather);
 			});
 
 			const condition = await weatherController.getDayCondition(index);
