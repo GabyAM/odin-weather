@@ -157,6 +157,12 @@ export const domController = (function () {
 		}
 	});
 
+	function setCityTitle() {
+		const $title = document.querySelector(".city-text h1");
+		const location = weatherInterface.getLocation();
+		$title.textContent = `${location.name}, ${location.country} `;
+	}
+
 	async function update() {
 		await weatherInterface.update();
 		loadButtons();

@@ -68,6 +68,10 @@ export const weatherController = (function () {
 		return getTitleFromDate(current.weather.forecast[index].date);
 	}
 
+	function getLocation() {
+		return current.weather.location;
+	}
+
 	return {
 		update,
 		setCity,
@@ -80,5 +84,6 @@ export const weatherController = (function () {
 		getDayCondition,
 		getDayTitle,
 		getCurrentDayIndex,
+		getLocation,
 	};
 })();

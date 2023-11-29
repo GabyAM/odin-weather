@@ -22,8 +22,12 @@ export const weatherInterface = (function () {
 		return weatherController.getCurrentDayIndex() === 0;
 	}
 
-	return { getHourWeather, isToday };
+	function getLocation() {
+		return weatherController.getLocation();
+	}
 	async function update() {
 		await weatherController.update();
 	}
+
+	return { getHourWeather, isToday, getLocation, validateCityName, update };
 })();
