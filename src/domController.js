@@ -53,7 +53,6 @@ export const domController = (function () {
 			icon = document.createElement("img");
 			icon.src = condition.icon;
 		}
-		console.log(icon.textContent);
 		if (icon.textContent) applyColor(icon.textContent, condition.isDay);
 
 		element.appendChild(icon);
@@ -64,13 +63,13 @@ export const domController = (function () {
 		$conditionText.textContent = weather.condition.name;
 
 		const $windSpeedText = document.querySelector(".card-wind-speed h3");
-		$windSpeedText.textContent = `Wind speed: ${weather.windKph}`;
+		$windSpeedText.textContent = `Wind speed: ${weather.windKph}km/h`;
 
 		const $humidityText = document.querySelector(".card-humidity h3");
-		$humidityText.textContent = `Humidity: ${weather.humidity}`;
+		$humidityText.textContent = `Humidity: ${weather.humidity}%`;
 
 		const $rainChanceText = document.querySelector(".card-rain-chance h3");
-		$rainChanceText.textContent = `Rain chance: ${weather.chanceOfRain}`;
+		$rainChanceText.textContent = `Rain chance: ${weather.chanceOfRain}%`;
 
 		const $cardThumbnail = document.querySelector(".card-thumbnail");
 		$cardThumbnail.innerHTML = "";
