@@ -1,4 +1,5 @@
 import { fetchWeather } from "./fetchWeather.js";
+import { approximateHour } from "./utilities.js";
 
 function getMappedWeather(weatherJson) {
 	function mapCondition(condition, isDay = null) {
@@ -51,6 +52,12 @@ function getMappedWeather(weatherJson) {
 		};
 		return mappedDay;
 	});
+
+	// 'now' doesn't have a chanceOfRain property
+	mappedWeather.now.chanceOfRain = mappedWeather.forecast[0].hours.find(
+		(hour) => hour.time === approximateHour(mappedWeather.now.lastUpdated)
+	).chanceOfRain;
+
 	return mappedWeather;
 }
 
