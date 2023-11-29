@@ -45,7 +45,25 @@
 					</div>
 				</div>
 			</div>
-			<div class="city-select"></div>
+			<div class="city-select">
+				<div class="city-text">
+					<h3>Weather in</h3>
+					<h1></h1>
+				</div>
+				<div class="city-input">
+					<div>
+						<input
+							type="text"
+							placeholder="Paris, London, New York..."
+							required
+							maxlength="100"
+							pattern="[a-zA-Z][a-zA-Z ]+"
+						/>
+						<span></span>
+					</div>
+					<button>Search</button>
+				</div>
+			</div>
 		</div>
 	</body>
 	<script type="module" src="src/index.js"></script>

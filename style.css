@@ -11,6 +11,8 @@
 	--card-partly-cloudy: #cccab7;
 	--card-snow: #ffdffc;
 	--text-color: #0c2b08;
+	--accent-color: #22c3b0;
+}
 
 * {
 	margin: 0;
@@ -160,5 +162,50 @@ body {
 	margin: 30px 0;
 }
 
+.city-select {
+	display: flex;
+	flex-direction: column;
 	align-items: center;
+	margin: 40px auto;
+}
+.city-text h3 {
+	font-weight: 300;
+}
+
+.city-input {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 4fr 1fr;
+	gap: 10px;
+}
+
+.city-input div {
+	display: flex;
+	flex-direction: column;
+}
+
+.city-input button,
+.city-input input {
+	width: 100%;
+	height: 40px;
+	border-radius: 8px;
+	border: none;
+}
+
+.city-input button {
+	background-color: var(--accent-color);
+	color: var(--main-white);
+	font-weight: 700;
+	font-size: 16px;
+}
+.city-input input {
+	background-color: var(--main-grey);
+	outline-color: var(--accent-color);
+}
+.city-input input.error {
+	border: 2px solid red;
+}
+.city-input span.error {
+	visibility: hidden;
+	color: red;
 }
