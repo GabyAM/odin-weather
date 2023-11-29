@@ -60,10 +60,18 @@ export const domController = (function () {
 	}
 
 	function showWeather(weather) {
-		const weatherElement = document.querySelector(".weather");
-		const conditionText = document.createElement("h3");
-		conditionText.textContent = weather.condition.name;
-		weatherElement.appendChild(conditionText);
+		const $conditionText = document.querySelector(".card-condition h3");
+		$conditionText.textContent = weather.condition.name;
+
+		const $windSpeedText = document.querySelector(".card-wind-speed h3");
+		$windSpeedText.textContent = `Wind speed: ${weather.windKph}`;
+
+		const $humidityText = document.querySelector(".card-humidity h3");
+		$humidityText.textContent = `Humidity: ${weather.humidity}`;
+
+		const $rainChanceText = document.querySelector(".card-rain-chance h3");
+		$rainChanceText.textContent = `Rain chance: ${weather.chanceOfRain}`;
+
 		const $cardThumbnail = document.querySelector(".card-thumbnail");
 		$cardThumbnail.innerHTML = "";
 		styleWeatherCard($cardThumbnail, weather.condition);
@@ -153,6 +161,7 @@ export const domController = (function () {
 	function init() {
 		loadButtons();
 		loadHours();
+		showWeather(weatherController.getCurrentWeather());
 	}
 
 	return { init };
