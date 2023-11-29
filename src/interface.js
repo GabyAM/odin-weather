@@ -25,6 +25,37 @@ export const weatherInterface = (function () {
 	function getLocation() {
 		return weatherController.getLocation();
 	}
+
+	function validateCityName(input) {
+		const $errorSpan = document.querySelector(".city-input span");
+
+		function setError(errorMessage) {
+			$errorSpan.classList.add("error");
+			input.classList.add("error");
+			$errorSpan.textContent = errorMessage;
+		}
+
+		if (input.validity.valid) {
+			if (input.classList.contains("error")) {
+				input.classList.remove("error");
+				$errorSpan.classList.remove("error");
+			}
+
+			weatherController.setCity(input.value);
+			return true;
+		} else {
+			$errorSpan.style.visibility = "visible";
+			if (input.validity.valueMissing) {
+				setError("You need to input a city");
+			} else if (input.validity.tooLong) {
+				setError("The city name is too long");
+			} else if (input.validity.patternMismatch) {
+				setError("You need to enter a valid name");
+			}
+			return false;
+		}
+	}
+
 	async function update() {
 		await weatherController.update();
 	}
