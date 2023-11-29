@@ -158,11 +158,13 @@ export const domController = (function () {
 		}
 	});
 
-	function init() {
+	async function update() {
+		await weatherInterface.update();
 		loadButtons();
 		loadHours();
+		setCityTitle();
 		showWeather(weatherController.getCurrentWeather());
 	}
 
-	return { init };
+	return { update };
 })();

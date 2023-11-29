@@ -9,12 +9,13 @@ export const weatherController = (function () {
 		hour: null,
 	};
 
-	async function init() {
-		await getWeatherForecast(current.city);
+	async function update() {
+		await getWeatherForecast();
 	}
 	// only call when changing city
-	async function getWeatherForecast(city) {
-		current.weather = await getWeather(city);
+	async function getWeatherForecast() {
+		current.weather = await getWeather(current.city);
+		current.city = getLocation().name;
 		console.log(current.weather);
 	}
 
@@ -68,7 +69,7 @@ export const weatherController = (function () {
 	}
 
 	return {
-		init,
+		update,
 		setCity,
 		setDay,
 		setHour,
