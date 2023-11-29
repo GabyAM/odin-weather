@@ -78,18 +78,20 @@ export const domController = (function () {
 
 	function loadButtons() {
 		const $dayButtons = document.querySelectorAll(".day-button");
-		$dayButtons.forEach(async (button, index) => {
+		$dayButtons.forEach((button, index) => {
+			button.innerHTML = "";
 			button.addEventListener("click", () => {
 				const weather = weatherController.getMomentWeather(index);
 				showWeather(weather);
 			});
 
 			const title = document.createElement("h3");
-			const text = await weatherController.getDayTitle(index);
+			const text =
+				index === 0 ? "Today" : weatherController.getDayTitle(index);
 			title.textContent = text;
 			button.appendChild(title);
 
-			const condition = await weatherController.getDayCondition(index);
+			const condition = weatherController.getDayCondition(index);
 			condition.isDay = true;
 			styleWeatherCard(button, condition);
 		});
