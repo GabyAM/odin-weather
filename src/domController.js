@@ -157,6 +157,14 @@ export const domController = (function () {
 		}
 	});
 
+	const $submitCityButton = document.querySelector(".city-input button");
+	$submitCityButton.addEventListener("click", async () => {
+		const $input = document.querySelector(".city-input input");
+		if (weatherInterface.validateCityName($input)) {
+			update();
+		}
+	});
+
 	function setCityTitle() {
 		const $title = document.querySelector(".city-text h1");
 		const location = weatherInterface.getLocation();
