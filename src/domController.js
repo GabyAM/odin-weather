@@ -81,7 +81,9 @@ export const domController = (function () {
 		$dayButtons.forEach((button, index) => {
 			button.innerHTML = "";
 			button.addEventListener("click", () => {
-				const weather = weatherController.getMomentWeather(index);
+				weatherInterface.changeDay(index);
+				const weather = weatherInterface.getMomentWeather();
+				loadHours();
 				showWeather(weather);
 			});
 
