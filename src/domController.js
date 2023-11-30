@@ -177,11 +177,15 @@ export const domController = (function () {
 	}
 
 	async function update() {
-		await weatherInterface.update();
-		loadButtons();
-		loadHours();
-		setCityTitle();
-		showWeather(weatherController.getCurrentWeather());
+		try {
+			await weatherInterface.update();
+			loadButtons();
+			loadHours();
+			setCityTitle();
+			showWeather(weatherController.getCurrentWeather());
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	return { update };

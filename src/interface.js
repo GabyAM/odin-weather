@@ -81,7 +81,12 @@ export const weatherInterface = (function () {
 	}
 
 	async function update() {
-		await weatherController.update();
+		try {
+			await weatherController.update();
+		} catch (error) {
+			error.message = "error while updating the data";
+			throw error;
+		}
 	}
 
 	return {

@@ -2,7 +2,7 @@ import { getWeather } from "./getWeather.js";
 import { approximateHour, getTitleFromDate } from "./utilities.js";
 
 export const weatherController = (function () {
-	const current = {
+	let current = {
 		weather: null,
 		city: "buenos aires",
 		day: 0,
@@ -10,13 +10,26 @@ export const weatherController = (function () {
 	};
 
 	async function update() {
-		await getWeatherForecast();
+		const previousCurrent = { ...current };
+		try {
+			await getWeatherForecast();
+		} catch (error) {
+			current = previousCurrent;
+			error.message = `error while getting the data`;
+			throw error;
+		}
 	}
 	// only call when changing city
 	async function getWeatherForecast() {
-		current.weather = await getWeather(current.city);
-		current.city = getLocation().name;
-		console.log(current.weather);
+		// current.weather = await getWeather(current.city);
+		// current.city = getLocation().name;
+		try {
+			const weather = await getWeather(current.city);
+			current.weather = weather;
+		} catch (error) {
+			error.message = `Error while saving the data: ${error.message}`;
+			throw error;
+		}
 	}
 
 	function setCity(newCity) {

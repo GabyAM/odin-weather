@@ -1,7 +1,8 @@
-import { weatherController } from "./weatherController.js";
 import { domController } from "./domController.js";
 
 async function init() {
-	await domController.update();
+	domController.update().catch((error) => {
+		error.message = `Something went wrong: ${error.message}`;
+	});
 }
 init();

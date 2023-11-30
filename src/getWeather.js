@@ -62,13 +62,11 @@ function getMappedWeather(weatherJson) {
 }
 
 export async function getWeather(city) {
-	// const weatherJson = await fetchWeather(city);
-	//	return { ...getMappedWeather(weatherJson) };
-	return fetchWeather(city)
-		.then((weatherJson) => {
-			return { ...getMappedWeather(weatherJson) };
-		})
-		.catch((e) => {
-			throw new Error("error!");
-		});
+	try {
+		const weatherJson = await fetchWeather(city);
+		return getMappedWeather(weatherJson);
+	} catch (error) {
+		error.message = `error while mapping the data: ${error.message}`;
+		throw error;
+	}
 }
