@@ -62,6 +62,13 @@ function getMappedWeather(weatherJson) {
 }
 
 export async function getWeather(city) {
-	const weatherJson = await fetchWeather(city);
-	return { ...getMappedWeather(weatherJson) };
+	// const weatherJson = await fetchWeather(city);
+	//	return { ...getMappedWeather(weatherJson) };
+	return fetchWeather(city)
+		.then((weatherJson) => {
+			return { ...getMappedWeather(weatherJson) };
+		})
+		.catch((e) => {
+			throw new Error("error!");
+		});
 }

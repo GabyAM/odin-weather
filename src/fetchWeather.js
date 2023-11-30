@@ -1,3 +1,4 @@
+const API_KEY = "3d0628d7134c45b5a4a142147232411";
 
 export function fetchWeather(city) {
 	return fetch(
@@ -6,11 +7,15 @@ export function fetchWeather(city) {
 	)
 		.then((res) => {
 			if (!res.ok) {
-				throw new Error("error fetching.");
+				if (res.status === 400) {
+					throw new Error("Invalid city provided");
+				} else {
+					throw new Error("Error fetching weather data.");
+				}
 			}
 			return res.json();
 		})
 		.catch((error) => {
-			throw new Error(error);
+			throw new Error("Something went wrong while fetching: " + error);
 		});
 }
