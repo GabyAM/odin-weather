@@ -31,21 +31,22 @@ export const weatherInterface = (function () {
 		return weatherController.getMomentWeather();
 	}
 
-	function validateCityName(input) {
-		const $errorSpan = document.querySelector(".city-input span");
+	// this code could go in an error module?
 
-		function setError(errorMessage) {
-			$errorSpan.classList.add("error");
-			input.classList.add("error");
-			$errorSpan.textContent = errorMessage;
-		}
+	const error = document.querySelector(".city-input span");
+	const input = document.querySelector(".city-input input");
 
-		function removeError() {
-			if (input.classList.contains("error")) {
-				input.classList.remove("error");
-				$errorSpan.classList.remove("error");
-			}
+	function removeError() {
+		if (input.classList.contains("error")) {
+			input.classList.remove("error");
+			error.classList.remove("error");
 		}
+	}
+
+	function setError(errorMessage) {
+		error.classList.add("error");
+		input.classList.add("error");
+		error.textContent = errorMessage;
 
 		function handleClickOutside(e) {
 			if (
@@ -56,6 +57,14 @@ export const weatherInterface = (function () {
 			}
 		}
 
+		document
+			.querySelector("body")
+			.addEventListener("click", handleClickOutside, {
+				once: true,
+			});
+	}
+
+	function validateCityName() {
 		const isPrevious = input.value === getLocation().name.toLowerCase();
 		if (input.validity.valid && !isPrevious) {
 			removeError();
@@ -71,11 +80,6 @@ export const weatherInterface = (function () {
 			} else if (isPrevious) {
 				setError("You need to input a different city");
 			}
-			document
-				.querySelector("body")
-				.addEventListener("click", handleClickOutside, {
-					once: true,
-				});
 			return false;
 		}
 	}
@@ -84,6 +88,7 @@ export const weatherInterface = (function () {
 		try {
 			await weatherController.update();
 		} catch (error) {
+			setError("The city was not found");
 			error.message = "error while updating the data";
 			throw error;
 		}
