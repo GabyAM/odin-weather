@@ -47,17 +47,15 @@ export const weatherController = (function () {
 		return current.weather.now;
 	}
 
-	function getMomentWeather(dayIndex = current.day) {
-		setDay(dayIndex);
-		if (current.hour) {
-			return getHourWeather();
-		}
-		if (dayIndex !== 0) {
+	function getMomentWeather() {
+		if (current.hour === "Now") {
+			if (current.day === 0) {
+				return getCurrentWeather();
+			}
 			const newHour = approximateHour(getCurrentWeather().lastUpdated);
 			setHour(newHour);
-			return getHourWeather();
 		}
-		return getCurrentWeather();
+		return getHourWeather();
 	}
 
 	function getDayCondition(index) {
