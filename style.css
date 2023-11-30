@@ -226,3 +226,19 @@ body {
 	visibility: visible;
 	color: red;
 }
+
+@media (max-width: 750px) {
+	.weather-card {
+		width: 50%;
+		margin: 0 auto;
+	}
+	.city-select {
+		width: 100%;
+	}
+}
+
+@media (max-width: 500px) {
+	.weather-card {
+		width: 80%;
+	}
+}
