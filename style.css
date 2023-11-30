@@ -8,8 +8,10 @@
 	--card-main-night: #352f7c;
 	--card-sunny: #f4efbe;
 	--card-rain: #becdf4;
+	--card-cloudy: #e7e7e7;
 	--card-partly-cloudy: #cccab7;
 	--card-snow: #ffdffc;
+	--card-fog: #94a390;
 	--text-color: #0c2b08;
 	--accent-color: #22c3b0;
 }

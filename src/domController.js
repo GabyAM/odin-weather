@@ -8,6 +8,7 @@ export const domController = (function () {
 		rain: "rainy",
 		clear: "clear_night",
 		cloudy: "filter_drama",
+		overcast: "filter_drama",
 		"partly-cloudy": "partly_cloudy",
 		fog: "foggy",
 		mist: "mist",
@@ -29,6 +30,7 @@ export const domController = (function () {
 				name === "clear" ? "main" : name
 			})`;
 			element.style.background = `linear-gradient(to bottom, ${firstColor}, ${secondColor})`;
+			if (!isDay) icon.style.color = "var(--main-white)";
 		}
 		let icon;
 		const conditionName = condition.name.toLowerCase().replace(/ /g, "-");
