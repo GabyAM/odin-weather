@@ -40,23 +40,42 @@ export const weatherInterface = (function () {
 			$errorSpan.textContent = errorMessage;
 		}
 
-		if (input.validity.valid) {
+		function removeError() {
 			if (input.classList.contains("error")) {
 				input.classList.remove("error");
 				$errorSpan.classList.remove("error");
 			}
+		}
 
+		function handleClickOutside(e) {
+			if (
+				e.target !== input &&
+				e.target !== document.querySelector(".city-input button")
+			) {
+				removeError();
+			}
+		}
+
+		const isPrevious = input.value === getLocation().name.toLowerCase();
+		if (input.validity.valid && !isPrevious) {
+			removeError();
 			weatherController.setCity(input.value);
 			return true;
 		} else {
-			$errorSpan.style.visibility = "visible";
 			if (input.validity.valueMissing) {
 				setError("You need to input a city");
 			} else if (input.validity.tooLong) {
 				setError("The city name is too long");
 			} else if (input.validity.patternMismatch) {
 				setError("You need to enter a valid name");
+			} else if (isPrevious) {
+				setError("You need to input a different city");
 			}
+			document
+				.querySelector("body")
+				.addEventListener("click", handleClickOutside, {
+					once: true,
+				});
 			return false;
 		}
 	}

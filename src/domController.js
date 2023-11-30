@@ -162,7 +162,8 @@ export const domController = (function () {
 	});
 
 	const $submitCityButton = document.querySelector(".city-input button");
-	$submitCityButton.addEventListener("click", async () => {
+	$submitCityButton.addEventListener("click", (event) => {
+		event.stopPropagation();
 		const $input = document.querySelector(".city-input input");
 		if (weatherInterface.validateCityName($input)) {
 			update();
