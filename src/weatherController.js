@@ -6,7 +6,7 @@ export const weatherController = (function () {
 		weather: null,
 		city: "buenos aires",
 		day: 0,
-		hour: null,
+		hour: "Now",
 	};
 
 	async function update() {
@@ -31,12 +31,8 @@ export const weatherController = (function () {
 		current.hour = newHour;
 	}
 
-	function getDayWeather() {
-		return current.weather.forecast[current.day];
-	}
-
-	function getCurrentDayIndex() {
-		return current.day;
+	function getDayWeather(day = current.day) {
+		return current.weather.forecast[day];
 	}
 
 	function getHourWeather() {
@@ -85,7 +81,6 @@ export const weatherController = (function () {
 		getMomentWeather,
 		getDayCondition,
 		getDayTitle,
-		getCurrentDayIndex,
 		getLocation,
 		getCurrentHour,
 	};
