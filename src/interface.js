@@ -14,7 +14,9 @@ export const weatherInterface = (function () {
 	}
 
 	function isToday() {
-		return weatherController.getCurrentDayIndex() === 0;
+		const dateNow = weatherController.getDayWeather().date;
+		const dateFirstDay = weatherController.getDayWeather(0).date;
+		return dateNow === dateFirstDay;
 	}
 
 	function getLocation() {

@@ -97,22 +97,19 @@ export const domController = (function () {
 		});
 	}
 
-	function addHourEvents(element) {
-		function highlightElement(element) {
-			const hours = document.querySelectorAll(".hour");
-			hours.forEach((hour) => {
-				if (hour.classList.contains("selected")) {
-					hour.classList.remove("selected");
-				}
-			});
-			element.classList.add("selected");
+	function highlightHourButton(element) {
+		const previousHighlighted = document.querySelector(".hour.selected");
+		if (previousHighlighted) {
+			previousHighlighted.classList.remove("selected");
 		}
+		element.classList.add("selected");
+	}
+
+	function addHourEvents(element) {
 		function handleHourChange() {
-			highlightElement(element);
-			const weather =
-				element.textContent === "Now"
-					? weatherController.getCurrentWeather()
-					: weatherInterface.getHourWeather(element.textContent);
+			highlightHourButton(element);
+			weatherInterface.changeHour(element.textContent);
+			const weather = weatherInterface.getMomentWeather();
 			showWeather(weather);
 		}
 
@@ -131,6 +128,9 @@ export const domController = (function () {
 			element.className = "hour";
 			element.textContent = name;
 			addHourEvents(element);
+			if (name === weatherInterface.getSelectedHour()) {
+				highlightHourButton(element);
+			}
 			$hoursDiv.appendChild(element);
 		}
 
