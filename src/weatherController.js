@@ -70,6 +70,10 @@ export const weatherController = (function () {
 		return current.weather.location;
 	}
 
+	function getCurrentHour() {
+		return current.hour;
+	}
+
 	return {
 		update,
 		setCity,
@@ -83,5 +87,6 @@ export const weatherController = (function () {
 		getDayTitle,
 		getCurrentDayIndex,
 		getLocation,
+		getCurrentHour,
 	};
 })();

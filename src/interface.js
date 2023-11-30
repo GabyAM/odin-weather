@@ -8,11 +8,6 @@ export const weatherInterface = (function () {
 		weatherController.setDay(dayIndex);
 	}
 
-	function getHourWeather(newHour) {
-		changeHour(newHour);
-		return weatherController.getHourWeather();
-	}
-
 	function getDayWeather(dayIndex) {
 		changeDay(dayIndex);
 		return weatherController.getDayWeather();
@@ -24,6 +19,14 @@ export const weatherInterface = (function () {
 
 	function getLocation() {
 		return weatherController.getLocation();
+	}
+
+	function getSelectedHour() {
+		return weatherController.getCurrentHour();
+	}
+
+	function getMomentWeather() {
+		return weatherController.getMomentWeather();
 	}
 
 	function validateCityName(input) {
@@ -60,5 +63,14 @@ export const weatherInterface = (function () {
 		await weatherController.update();
 	}
 
-	return { getHourWeather, isToday, getLocation, validateCityName, update };
+	return {
+		changeDay,
+		changeHour,
+		getMomentWeather,
+		isToday,
+		getLocation,
+		validateCityName,
+		update,
+		getSelectedHour,
+	};
 })();
