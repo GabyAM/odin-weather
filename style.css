@@ -216,9 +216,13 @@ body {
 	padding: 0 10px;
 }
 .city-input input.error {
-	border: 2px solid red;
+	border: 1px solid red;
+}
+
+.city-input span {
+	visibility: hidden;
 }
 .city-input span.error {
-	visibility: hidden;
+	visibility: visible;
 	color: red;
 }
