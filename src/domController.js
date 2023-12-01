@@ -1,4 +1,5 @@
 import { weatherInterface } from "./interface.js";
+import { debounce } from "./utilities.js";
 import { weatherController } from "./weatherController.js";
 
 export const domController = (function () {
@@ -150,20 +151,34 @@ export const domController = (function () {
 		});
 	}
 
-	$hoursDiv.addEventListener("wheel", (e) => {
-		e.preventDefault();
-		if (e.deltaY > 0) {
-			$hoursDiv.scrollTo({
-				left: ($hoursDiv.scrollLeft += 100),
-				behavior: "smooth",
-			});
-		} else {
-			$hoursDiv.scrollTo({
-				left: ($hoursDiv.scrollLeft -= 100),
-				behavior: "smooth",
-			});
+	let isScrolling = false;
+	function handleScrollCallback(e) {
+		function scrollCallback() {
+			e.preventDefault();
+			if (e.deltaY > 0) {
+				$hoursDiv.scrollTo({
+					left: ($hoursDiv.scrollLeft += 100),
+					behavior: "smooth",
+				});
+			} else {
+				$hoursDiv.scrollTo({
+					left: ($hoursDiv.scrollLeft -= 100),
+					behavior: "smooth",
+				});
+			}
 		}
-	});
+
+		if (!isScrolling) {
+			scrollCallback();
+			isScrolling = true;
+			setTimeout(() => {
+				isScrolling = false;
+			}, 50);
+		}
+	}
+
+	const debouncedScroll = debounce(handleScrollCallback, 100);
+	$hoursDiv.addEventListener("wheel", (e) => debouncedScroll(e));
 
 	const $submitCityButton = document.querySelector(".city-input button");
 	$submitCityButton.addEventListener("click", (event) => {
