@@ -12,6 +12,7 @@
 	--card-partly-cloudy: #cccab7;
 	--card-snow: #ffdffc;
 	--card-fog: #94a390;
+	--card-mist: #b7cbcc;
 	--text-color: #0c2b08;
 	--accent-color: #22c3b0;
 }
@@ -85,14 +86,6 @@ body {
 
 .material-symbols-outlined {
 	color: var(--text-color);
-}
-
-.sunny {
-	background: linear-gradient(to bottom, var(--card-main), var(--card-sunny));
-}
-
-.rain {
-	background: linear-gradient(to bottom, var(--card-main), var(--card-rainy));
 }
 
 .hour-selection {

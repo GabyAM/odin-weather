@@ -45,6 +45,8 @@ export const domController = (function () {
 				icon.textContent = icons.snow;
 			} else if (conditionName.includes("thunder")) {
 				icon.textContent = icons.thunder;
+			} else if (conditionName.includes("fog")) {
+				icon.textContent = icons.fog;
 			} else {
 				icon.textContent = icons[conditionName];
 				if (conditionName === "partly-cloudy") {
