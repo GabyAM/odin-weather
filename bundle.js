@@ -2836,6 +2836,7 @@ const weatherController = (function () {
 		city: "buenos aires",
 		day: 0,
 		hour: "Now",
+		isCelcius: true,
 	};
 
 	async function update() {
@@ -2871,6 +2872,10 @@ const weatherController = (function () {
 
 	function setHour(newHour) {
 		current.hour = newHour;
+	}
+
+	function setIsCelcius(newIsCelcius) {
+		current.isCelcius = newIsCelcius;
 	}
 
 	function getDayWeather(day = current.day) {
@@ -2912,6 +2917,14 @@ const weatherController = (function () {
 		return current.hour;
 	}
 
+	function getIsCelcius() {
+		return current.isCelcius;
+	}
+
+	function toggleIsCelcius() {
+		setIsCelcius(!current.isCelcius);
+	}
+
 	return {
 		update,
 		setCity,
@@ -2925,6 +2938,8 @@ const weatherController = (function () {
 		getDayTitle,
 		getLocation,
 		getCurrentHour,
+		getIsCelcius,
+		toggleIsCelcius,
 	};
 })();
 
@@ -3025,6 +3040,13 @@ const weatherInterface = (function () {
 		}
 	}
 
+	function changeTemperatureScale() {
+		weatherController.toggleIsCelcius();
+	}
+	function getIsCelcius() {
+		return weatherController.getIsCelcius();
+	}
+
 	return {
 		changeDay,
 		changeHour,
@@ -3034,6 +3056,8 @@ const weatherInterface = (function () {
 		validateCityName,
 		update,
 		getSelectedHour,
+		changeTemperatureScale,
+		getIsCelcius,
 	};
 })();
 
@@ -3071,7 +3095,7 @@ const domController = (function () {
 				name === "clear" ? "main" : name
 			})`;
 			element.style.background = `linear-gradient(to bottom, ${firstColor}, ${secondColor})`;
-			if (!isDay) icon.style.color = "var(--main-white)";
+			if (!isDay) icon.classList.add("text-white");
 		}
 		let icon;
 		const conditionName = condition.name.toLowerCase().replace(/ /g, "-");
@@ -3100,25 +3124,41 @@ const domController = (function () {
 		}
 		if (icon.textContent) applyColor(icon.textContent, condition.isDay);
 
+		icon.classList.add("icon");
 		element.appendChild(icon);
 	}
 
 	function showWeather(weather) {
-		const $conditionText = document.querySelector(".card-condition h3");
+		const $conditionText = document.querySelector(".card-condition h5");
 		$conditionText.textContent = weather.condition.name;
 
-		const $windSpeedText = document.querySelector(".card-wind-speed h3");
+		const $windSpeedText = document.querySelector(".card-wind-speed h5");
 		$windSpeedText.textContent = `Wind speed: ${weather.windKph}km/h`;
 
-		const $humidityText = document.querySelector(".card-humidity h3");
+		const $humidityText = document.querySelector(".card-humidity h5");
 		$humidityText.textContent = `Humidity: ${weather.humidity}%`;
 
-		const $rainChanceText = document.querySelector(".card-rain-chance h3");
+		const $rainChanceText = document.querySelector(".card-rain-chance h5");
 		$rainChanceText.textContent = `Rain chance: ${weather.chanceOfRain}%`;
 
 		const $cardThumbnail = document.querySelector(".card-thumbnail");
 		$cardThumbnail.innerHTML = "";
 		styleWeatherCard($cardThumbnail, weather.condition);
+
+		const degrees = document.createElement("span");
+		degrees.className = "degrees";
+
+		const celciusText = `${weather.tempC} °C`;
+		const fahrenheitText = `${weather.tempF} °F`;
+		degrees.textContent = celciusText;
+		if (!weather.condition.isDay) degrees.classList.add("text-white");
+		degrees.addEventListener("click", () => {
+			weatherInterface.changeTemperatureScale();
+			degrees.textContent = weatherInterface.getIsCelcius()
+				? celciusText
+				: fahrenheitText;
+		});
+		$cardThumbnail.appendChild(degrees);
 	}
 
 	function loadButtons() {
@@ -3193,8 +3233,9 @@ const domController = (function () {
 
 	let isScrolling = false;
 	function handleScrollCallback(e) {
+		e.stopPropagation();
+		e.preventDefault();
 		function scrollCallback() {
-			e.preventDefault();
 			if (e.deltaY > 0) {
 				$hoursDiv.scrollTo({
 					left: ($hoursDiv.scrollLeft += 100),
@@ -3251,6 +3292,7 @@ const domController = (function () {
 })();
 
 ;// CONCATENATED MODULE: ./src/index.js
+
 
 
 async function init() {
