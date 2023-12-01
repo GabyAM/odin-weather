@@ -120,12 +120,13 @@ body {
 .weather {
 	display: flex;
 	flex-wrap: wrap;
+	height: 400px;
 }
 
 .weather-card {
 	background-color: var(--main-grey);
 	width: 38%;
-	height: 400px;
+	height: 100%;
 	border-radius: 32px;
 	padding: 25px 20px;
 	display: flex;
